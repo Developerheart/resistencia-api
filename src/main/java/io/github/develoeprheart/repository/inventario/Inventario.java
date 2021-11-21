@@ -3,11 +3,13 @@ package io.github.develoeprheart.repository.inventario;
 import io.github.develoeprheart.verbos.post.requestes.InventoryRequest;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Inventarios")
-public class Inventario {
+public class Inventario implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Basic(optional = false)

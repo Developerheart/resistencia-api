@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Builder
 public class RebeldeRequest implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     private String nome;
     private Integer idade;
     private Character genero;

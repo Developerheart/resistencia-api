@@ -4,6 +4,7 @@ import io.github.develoeprheart.repository.inventario.Inventario;
 import io.github.develoeprheart.repository.localizacao.Localizacao;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "rebeldes")
 public class Rebelde implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -25,8 +27,8 @@ public class Rebelde implements Serializable {
     private String nome;
     private Integer idade;
     private Character genero;
-
-    @OneToOne(targetEntity = Localizacao.class, cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
+//    @OneToOne(targetEntity = Localizacao.class, cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = Localizacao.class,  cascade = CascadeType.ALL)
     private Localizacao localizacao;
 
     @OneToOne(targetEntity = Inventario.class, cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)

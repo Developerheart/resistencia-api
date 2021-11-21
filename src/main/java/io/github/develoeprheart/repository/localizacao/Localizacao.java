@@ -3,12 +3,14 @@ package io.github.develoeprheart.repository.localizacao;
 import io.github.develoeprheart.verbos.post.requestes.LocalizacaoRequest;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "localizacoes")
-public class Localizacao {
+public class Localizacao implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Basic(optional = false)
@@ -17,6 +19,14 @@ public class Localizacao {
     private String nome;
     private Long latitude;
     private Long longitude;
+
+
+    public Localizacao(UUID id, String nome, Long latitude, Long longitude) {
+        this.id = id;
+        this.nome = nome;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public Localizacao(String nome, Long latitude, Long longitude) {
         this.nome = nome;

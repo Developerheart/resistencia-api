@@ -1,10 +1,12 @@
 package io.github.develoeprheart.controller;
 
 
+import com.sun.jdi.event.ExceptionEvent;
 import io.github.develoeprheart.repository.inventario.Inventario;
 import io.github.develoeprheart.repository.localizacao.Localizacao;
 import io.github.develoeprheart.repository.rebelde.Rebelde;
 import io.github.develoeprheart.verbos.patch.request.PatchRebeldeRequest;
+import io.github.develoeprheart.verbos.patch.response.PatchRebeldeResponse;
 import io.github.develoeprheart.verbos.post.requestes.InventoryRequest;
 import io.github.develoeprheart.verbos.post.requestes.LocalizacaoRequest;
 import io.github.develoeprheart.verbos.post.requestes.RebeldeRequest;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -47,8 +50,30 @@ public class RebeldeController {
 
     }
 
-    @PatchMapping("v1/rebelde/{id}")
-    public EntityResponse<?> edit(@PathVariable UUID id, @RequestBody PatchRebeldeRequest rebeldeRequest){
-        return null;
+    @PatchMapping("/{id}")
+    public ResponseEntity<PatchRebeldeResponse> edit(@PathVariable UUID id, @RequestBody PatchRebeldeRequest rebeldeRequest){
+        try {
+            Rebelde rebelde = rebeldeService.findById(id);
+            BeanUtils.copyProperties(rebeldeRequest, rebelde, "localizacao");
+            System.out.println("Objeto ----->>>" + rebelde);
+
+            if (Objects.isNull(rebelde)){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new PatchRebeldeResponse());
+            }
+            rebelde.setNome(rebeldeRequest.getNome());
+            rebelde.setIdade(rebeldeRequest.getIdade());
+            rebelde.setGenero(rebeldeRequest.getGenero());
+            rebelde.setLocalizacao(rebeldeRequest.localizacao(id));
+            rebeldeService.save(rebelde);
+            PatchRebeldeResponse response = new PatchRebeldeResponse();
+            BeanUtils.copyProperties(rebelde, response, "localizacao", "inventario");
+
+            response.setLocalizacao(rebelde.getLocalizacao());
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new PatchRebeldeResponse());
+        }
     }
 }
