@@ -15,6 +15,9 @@ public class InventoryRequest implements Serializable {
     private Integer comida;
 
 
+    public InventoryRequest() {
+    }
+
     public InventoryRequest(Inventario inventario) {
 
         this.agua = inventario.getAgua();

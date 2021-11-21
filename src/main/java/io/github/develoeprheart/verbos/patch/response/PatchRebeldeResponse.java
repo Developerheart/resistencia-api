@@ -1,5 +1,6 @@
 package io.github.develoeprheart.verbos.patch.response;
 
+import io.github.develoeprheart.repository.inventario.Inventario;
 import io.github.develoeprheart.repository.localizacao.Localizacao;
 import io.github.develoeprheart.verbos.post.requestes.InventoryRequest;
 import io.github.develoeprheart.verbos.post.requestes.LocalizacaoRequest;
@@ -73,6 +74,15 @@ public class PatchRebeldeResponse  implements Serializable {
     public void setInventario(InventoryRequest inventario) {
         this.inventario = inventario;
     }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = new InventoryRequest();
+        this.inventario.setAgua(inventario.getAgua());
+        this.inventario.setArma(inventario.getArma());
+        this.inventario.setComida(inventario.getComida());
+        this.inventario.setMunicao(inventario.getMunicao());
+    }
+
 
     public PatchRebeldeResponse() {
     }

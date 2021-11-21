@@ -55,21 +55,16 @@ public class RebeldeController {
         try {
             Rebelde rebelde = rebeldeService.findById(id);
             BeanUtils.copyProperties(rebeldeRequest, rebelde, "localizacao");
-            System.out.println("Objeto ----->>>" + rebelde);
-
             if (Objects.isNull(rebelde)){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new PatchRebeldeResponse());
             }
-            rebelde.setNome(rebeldeRequest.getNome());
-            rebelde.setIdade(rebeldeRequest.getIdade());
-            rebelde.setGenero(rebeldeRequest.getGenero());
             rebelde.setLocalizacao(rebeldeRequest.localizacao(id));
             rebeldeService.save(rebelde);
             PatchRebeldeResponse response = new PatchRebeldeResponse();
             BeanUtils.copyProperties(rebelde, response, "localizacao", "inventario");
 
             response.setLocalizacao(rebelde.getLocalizacao());
-
+            response.setInventario(rebelde.getInventario());
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }catch (Exception e){
             e.printStackTrace();
