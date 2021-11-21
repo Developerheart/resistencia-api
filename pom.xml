@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.develoeprheart</groupId>
     <artifactId>api-resistencia</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.7.3-SNAPSHOT</version>
     <name>api-resistencia</name>
     <description>api-resistencia</description>
     <properties>
